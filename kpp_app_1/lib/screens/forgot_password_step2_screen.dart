@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
+import '../widgets/status_banner.dart';
 
 class ForgotPasswordStep2Screen extends StatelessWidget {
   final Function(String)? onNavigate;
@@ -67,6 +68,12 @@ class ForgotPasswordStep2Screen extends StatelessWidget {
               ),
               const SizedBox(height: 24),
 
+              // Reusable Success Banner Widget
+              const StatusBanner(
+                text: 'Дані перевірено.',
+              ),
+              const SizedBox(height: 24),
+
               // Enter new password field
               const Text(
                 'Введіть новий пароль',
@@ -78,10 +85,10 @@ class ForgotPasswordStep2Screen extends StatelessWidget {
               ),
               const SizedBox(height: 6),
               TextFormField(
+                initialValue: '••••••••••',
                 obscureText: true,
                 style: const TextStyle(fontSize: 15, color: AppTheme.primaryDark),
                 decoration: const InputDecoration(
-                  hintText: 'Введіть новий пароль',
                   prefixIcon: Icon(Icons.lock_outline, color: AppTheme.textSecondary, size: 20),
                   suffixIcon: Icon(Icons.visibility_off_outlined, color: AppTheme.textSecondary, size: 20),
                 ),
@@ -99,13 +106,38 @@ class ForgotPasswordStep2Screen extends StatelessWidget {
               ),
               const SizedBox(height: 6),
               TextFormField(
+                initialValue: '••••••••••',
                 obscureText: true,
                 style: const TextStyle(fontSize: 15, color: AppTheme.primaryDark),
                 decoration: const InputDecoration(
-                  hintText: 'Повторіть пароль',
                   prefixIcon: Icon(Icons.lock_outline, color: AppTheme.textSecondary, size: 20),
                   suffixIcon: Icon(Icons.visibility_off_outlined, color: AppTheme.textSecondary, size: 20),
                 ),
+              ),
+              const SizedBox(height: 10),
+
+              // Green validation items
+              const Text(
+                'Паролі збігаються',
+                style: TextStyle(
+                  fontSize: 13,
+                  color: AppTheme.successGreen,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              const SizedBox(height: 6),
+              const Row(
+                children: [
+                  Icon(Icons.check_circle_outline, color: AppTheme.successGreen, size: 18),
+                  SizedBox(width: 8),
+                  Text(
+                    'Щонайменше 8 символів і одна цифра',
+                    style: TextStyle(
+                      fontSize: 13,
+                      color: AppTheme.textSecondary,
+                    ),
+                  ),
+                ],
               ),
               const SizedBox(height: 36),
 

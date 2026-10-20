@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
+import '../widgets/status_banner.dart';
 
 class ForgotPasswordStep1Screen extends StatelessWidget {
   final Function(String)? onNavigate;
@@ -78,9 +79,9 @@ class ForgotPasswordStep1Screen extends StatelessWidget {
               ),
               const SizedBox(height: 6),
               TextFormField(
+                initialValue: 'olena.melnyk@gmail.com',
                 style: const TextStyle(fontSize: 15, color: AppTheme.primaryDark),
                 decoration: const InputDecoration(
-                  hintText: 'example@gmail.com',
                   prefixIcon: Icon(Icons.mail_outline, color: AppTheme.textSecondary, size: 20),
                 ),
               ),
@@ -92,6 +93,12 @@ class ForgotPasswordStep1Screen extends StatelessWidget {
                   if (onNavigate != null) onNavigate!('forgot_step2');
                 },
                 child: const Text('Надіслати код'),
+              ),
+              const SizedBox(height: 20),
+
+              // Reusable Success Banner Widget
+              const StatusBanner(
+                text: 'Код надіслано на email.',
               ),
               const SizedBox(height: 32),
 
@@ -119,17 +126,7 @@ class ForgotPasswordStep1Screen extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(14),
-                      border: Border.all(color: AppTheme.cardBorder, width: 1.5),
-                    ),
-                    child: TextField(
-                      keyboardType: TextInputType.number,
-                      textAlign: TextAlign.center,
-                      maxLength: 1,
-                      decoration: const InputDecoration(
-                        counterText: '',
-                        border: InputBorder.none,
-                        contentPadding: EdgeInsets.zero,
-                      ),
+                      border: Border.all(color: AppTheme.successGreen, width: 1.5),
                     ),
                   );
                 }),

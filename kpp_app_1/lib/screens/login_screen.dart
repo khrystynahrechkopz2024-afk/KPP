@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
+import '../widgets/status_banner.dart';
 
 class LoginScreen extends StatelessWidget {
   final Function(String)? onNavigate;
@@ -73,9 +74,9 @@ class LoginScreen extends StatelessWidget {
               ),
               const SizedBox(height: 6),
               TextFormField(
+                initialValue: 'olena.melnyk@gmail.com',
                 style: const TextStyle(fontSize: 15, color: AppTheme.primaryDark),
                 decoration: const InputDecoration(
-                  hintText: 'example@gmail.com',
                   prefixIcon: Icon(Icons.mail_outline, color: AppTheme.textSecondary, size: 20),
                 ),
               ),
@@ -95,10 +96,10 @@ class LoginScreen extends StatelessWidget {
               ),
               const SizedBox(height: 6),
               TextFormField(
+                initialValue: '••••••••••',
                 obscureText: true,
                 style: const TextStyle(fontSize: 15, color: AppTheme.primaryDark),
                 decoration: const InputDecoration(
-                  hintText: 'Введіть пароль',
                   prefixIcon: Icon(Icons.lock_outline, color: AppTheme.textSecondary, size: 20),
                   suffixIcon: Icon(Icons.visibility_off_outlined, color: AppTheme.textSecondary, size: 20),
                 ),
@@ -147,6 +148,12 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ),
                 ],
+              ),
+              const SizedBox(height: 20),
+
+              // Reusable Success Banner Widget
+              const StatusBanner(
+                text: 'Дані перевірено. Можна входити.',
               ),
               const SizedBox(height: 20),
 

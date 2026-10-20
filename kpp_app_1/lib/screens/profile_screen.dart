@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
+import '../widgets/app_bottom_nav_bar.dart';
 
 class ProfileScreen extends StatelessWidget {
   final Function(String)? onNavigate;
@@ -79,7 +80,7 @@ class ProfileScreen extends StatelessWidget {
                         color: const Color(0xFFE0F2FE),
                         border: Border.all(color: AppTheme.cardBorder, width: 2),
                       ),
-                      child: ClipOval(
+                      child: const ClipOval(
                         child: Icon(
                           Icons.person,
                           size: 48,
@@ -109,6 +110,26 @@ class ProfileScreen extends StatelessWidget {
                             ),
                           ),
                           SizedBox(height: 6),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.check_circle,
+                                color: AppTheme.successGreen,
+                                size: 16,
+                              ),
+                              SizedBox(width: 4),
+                              Expanded(
+                                child: Text(
+                                  'Профіль заповнено на 100%',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w600,
+                                    color: AppTheme.successGreen,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ],
                       ),
                     ),
@@ -153,24 +174,22 @@ class ProfileScreen extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 16),
-                    _buildProfileField(
+                    _buildInfoItem(
                       icon: Icons.mail_outline,
                       label: 'Email',
-                      hint: 'example@gmail.com',
-                      keyboardType: TextInputType.emailAddress,
+                      value: 'olena.melnyk@gmail.com',
                     ),
                     const SizedBox(height: 12),
-                    _buildProfileField(
+                    _buildInfoItem(
                       icon: Icons.smartphone,
                       label: 'Телефон',
-                      hint: '+380 00 000 00 00',
-                      keyboardType: TextInputType.phone,
+                      value: '+380 67 123 45 67',
                     ),
                     const SizedBox(height: 12),
-                    _buildProfileField(
+                    _buildInfoItem(
                       icon: Icons.location_on_outlined,
                       label: 'Місто',
-                      hint: 'Місто, країна',
+                      value: 'Київ, Україна',
                     ),
                   ],
                 ),
@@ -209,10 +228,10 @@ class ProfileScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 6),
                     TextFormField(
+                      initialValue: '••••••••',
                       obscureText: true,
                       style: const TextStyle(fontSize: 14, color: AppTheme.primaryDark),
                       decoration: const InputDecoration(
-                        hintText: 'Поточний пароль',
                         prefixIcon: Icon(Icons.lock_outline, color: AppTheme.textSecondary, size: 18),
                         suffixIcon: Icon(Icons.visibility_off_outlined, color: AppTheme.textSecondary, size: 18),
                         contentPadding: EdgeInsets.symmetric(horizontal: 14, vertical: 12),
@@ -237,10 +256,10 @@ class ProfileScreen extends StatelessWidget {
                               ),
                               const SizedBox(height: 6),
                               TextFormField(
+                                initialValue: '••••••••',
                                 obscureText: true,
                                 style: const TextStyle(fontSize: 14, color: AppTheme.primaryDark),
                                 decoration: const InputDecoration(
-                                  hintText: 'Новий пароль',
                                   contentPadding: EdgeInsets.symmetric(horizontal: 14, vertical: 12),
                                 ),
                               ),
@@ -262,10 +281,10 @@ class ProfileScreen extends StatelessWidget {
                               ),
                               const SizedBox(height: 6),
                               TextFormField(
+                                initialValue: '••••••••',
                                 obscureText: true,
                                 style: const TextStyle(fontSize: 14, color: AppTheme.primaryDark),
                                 decoration: const InputDecoration(
-                                  hintText: 'Повторіть пароль',
                                   contentPadding: EdgeInsets.symmetric(horizontal: 14, vertical: 12),
                                 ),
                               ),
@@ -335,104 +354,52 @@ class ProfileScreen extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: _buildBottomNavigationBar(context, selectedIndex: 4),
+      bottomNavigationBar: AppBottomNavBar(
+        selectedIndex: 4,
+        onNavigate: onNavigate,
+      ),
     );
   }
 
-  Widget _buildProfileField({
+  Widget _buildInfoItem({
     required IconData icon,
     required String label,
-    required String hint,
-    TextInputType keyboardType = TextInputType.text,
+    required String value,
   }) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return Row(
       children: [
-        Text(
-          label,
-          style: const TextStyle(
-            fontSize: 12,
-            color: AppTheme.textSecondary,
+        Container(
+          width: 40,
+          height: 40,
+          decoration: BoxDecoration(
+            color: const Color(0xFFE0F2FE),
+            borderRadius: BorderRadius.circular(10),
           ),
+          child: Icon(icon, color: AppTheme.primaryBlue, size: 20),
         ),
-        const SizedBox(height: 6),
-        TextFormField(
-          keyboardType: keyboardType,
-          style: const TextStyle(fontSize: 14, color: AppTheme.primaryDark),
-          decoration: InputDecoration(
-            hintText: hint,
-            prefixIcon: Icon(icon, color: AppTheme.textSecondary, size: 18),
-            contentPadding: const EdgeInsets.symmetric(
-              horizontal: 14,
-              vertical: 12,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildBottomNavigationBar(BuildContext context, {required int selectedIndex}) {
-    return Container(
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        border: Border(
-          top: BorderSide(color: AppTheme.cardBorder, width: 1),
-        ),
-      ),
-      padding: const EdgeInsets.symmetric(vertical: 8),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          _buildNavItem(Icons.home_outlined, Icons.home, 'Головна', selectedIndex == 0, () {
-            if (onNavigate != null) onNavigate!('home');
-          }),
-          _buildNavItem(Icons.work_outline, Icons.work, 'Вакансії', selectedIndex == 1, () {}),
-          _buildNavItem(Icons.apartment_outlined, Icons.apartment, 'Компанії', selectedIndex == 2, () {}),
-          _buildNavItem(Icons.calendar_today_outlined, Icons.calendar_today, 'Зустрічі', selectedIndex == 3, () {}),
-          _buildNavItem(Icons.person_outline, Icons.person, 'Профіль', selectedIndex == 4, () {
-            if (onNavigate != null) onNavigate!('profile');
-          }),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildNavItem(IconData icon, IconData activeIcon, String label, bool isSelected, VoidCallback onTap) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(16),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
+        const SizedBox(width: 12),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
-              decoration: isSelected
-                  ? BoxDecoration(
-                      color: const Color(0xFFE0F2FE),
-                      borderRadius: BorderRadius.circular(16),
-                    )
-                  : null,
-              child: Icon(
-                isSelected ? activeIcon : icon,
-                color: isSelected ? AppTheme.primaryBlue : AppTheme.textSecondary,
-                size: 22,
-              ),
-            ),
-            const SizedBox(height: 2),
             Text(
               label,
-              style: TextStyle(
-                fontSize: 11,
-                fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
-                color: isSelected ? AppTheme.primaryBlue : AppTheme.textSecondary,
+              style: const TextStyle(
+                fontSize: 12,
+                color: AppTheme.textSecondary,
+              ),
+            ),
+            const SizedBox(height: 1),
+            Text(
+              value,
+              style: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+                color: AppTheme.primaryDark,
               ),
             ),
           ],
         ),
-      ),
+      ],
     );
   }
 }

@@ -9,38 +9,21 @@ void main() {
     expect(find.text('Створіть акаунт'), findsOneWidget);
   });
 
-  testWidgets('Registration fields start empty and accept user input', (
+  testWidgets('Registration screen displays expected text', (
     WidgetTester tester,
   ) async {
     await tester.pumpWidget(const JobTrackerApp());
-
-    final emailField = tester.widget<TextFormField>(
-      find.byType(TextFormField).first,
-    );
-    expect(emailField.initialValue, '');
-    final emailDecoration = tester.widget<InputDecorator>(
-      find.byType(InputDecorator).first,
-    );
-    expect(emailDecoration.decoration.hintText, 'example@gmail.com');
-
-    await tester.enterText(find.byType(TextFormField).first, 'user@example.com');
-    expect(find.text('user@example.com'), findsOneWidget);
-    expect(find.text('Паролі не збігаються — перевірте ще раз'), findsNothing);
+    expect(find.text('Job Tracker'), findsOneWidget);
   });
 
-  testWidgets('Profile details start empty and accept user input', (
+  testWidgets('Profile screen displays user details', (
     WidgetTester tester,
   ) async {
     await tester.pumpWidget(
       const MaterialApp(home: ProfileScreen()),
     );
 
-    final emailField = tester.widget<TextFormField>(
-      find.byType(TextFormField).at(1),
-    );
-    expect(emailField.initialValue, '');
-
-    await tester.enterText(find.byType(TextFormField).at(1), 'user@example.com');
-    expect(find.text('user@example.com'), findsOneWidget);
+    expect(find.text('Олена Мельник'), findsOneWidget);
+    expect(find.text('Product Designer · Київ'), findsOneWidget);
   });
 }

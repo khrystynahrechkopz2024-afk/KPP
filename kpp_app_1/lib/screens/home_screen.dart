@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
+import '../widgets/stat_card.dart';
+import '../widgets/vacancy_card.dart';
+import '../widgets/app_bottom_nav_bar.dart';
 
 class HomeScreen extends StatelessWidget {
   final Function(String)? onNavigate;
@@ -109,26 +112,26 @@ class HomeScreen extends StatelessWidget {
               ),
               const SizedBox(height: 14),
 
-              // 3 Stat Cards Row
-              Row(
+              // 3 Reusable Stat Cards Row
+              const Row(
                 children: [
-                  _buildStatCard(
+                  StatCard(
                     icon: Icons.near_me_outlined,
-                    iconBg: const Color(0xFFE0F2FE),
+                    iconBg: Color(0xFFE0F2FE),
                     iconColor: AppTheme.primaryBlue,
                     number: '24',
                     label: 'Подано',
                   ),
-                  const SizedBox(width: 12),
-                  _buildStatCard(
+                  SizedBox(width: 12),
+                  StatCard(
                     icon: Icons.calendar_today_outlined,
                     iconBg: AppTheme.orangeBadgeBg,
                     iconColor: AppTheme.orangeBadgeText,
                     number: '6',
                     label: 'Співбесіди',
                   ),
-                  const SizedBox(width: 12),
-                  _buildStatCard(
+                  SizedBox(width: 12),
+                  StatCard(
                     icon: Icons.auto_awesome_outlined,
                     iconBg: AppTheme.successBg,
                     iconColor: AppTheme.successGreen,
@@ -223,8 +226,8 @@ class HomeScreen extends StatelessWidget {
               ),
               const SizedBox(height: 14),
 
-              // Vacancy items list
-              _buildVacancyCard(
+              // Reusable Vacancy Cards
+              const VacancyCard(
                 title: 'Product Designer',
                 company: 'BrightTech · 24 вер.',
                 statusText: 'Співбесіда',
@@ -232,7 +235,7 @@ class HomeScreen extends StatelessWidget {
                 statusTextColor: AppTheme.orangeBadgeText,
               ),
               const SizedBox(height: 12),
-              _buildVacancyCard(
+              const VacancyCard(
                 title: 'Senior UX Designer',
                 company: 'Lumen Labs · 22 вер.',
                 statusText: 'Тестове',
@@ -240,7 +243,7 @@ class HomeScreen extends StatelessWidget {
                 statusTextColor: AppTheme.purpleBadgeText,
               ),
               const SizedBox(height: 12),
-              _buildVacancyCard(
+              const VacancyCard(
                 title: 'UI/UX Designer',
                 company: 'NovaPay · 19 вер.',
                 statusText: 'Перегляд',
@@ -252,193 +255,9 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: _buildBottomNavigationBar(context, selectedIndex: 0),
-    );
-  }
-
-  Widget _buildStatCard({
-    required IconData icon,
-    required Color iconBg,
-    required Color iconColor,
-    required String number,
-    required String label,
-  }) {
-    return Expanded(
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: AppTheme.cardBorder),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              width: 38,
-              height: 38,
-              decoration: BoxDecoration(
-                color: iconBg,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Icon(icon, color: iconColor, size: 20),
-            ),
-            const SizedBox(height: 14),
-            Text(
-              number,
-              style: const TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.w800,
-                color: AppTheme.primaryDark,
-              ),
-            ),
-            const SizedBox(height: 2),
-            Text(
-              label,
-              style: const TextStyle(
-                fontSize: 12,
-                color: AppTheme.textSecondary,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildVacancyCard({
-    required String title,
-    required String company,
-    required String statusText,
-    required Color statusBg,
-    required Color statusTextColor,
-  }) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppTheme.cardBorder),
-      ),
-      child: Row(
-        children: [
-          Container(
-            width: 44,
-            height: 44,
-            decoration: BoxDecoration(
-              color: const Color(0xFFE0F2FE),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: const Icon(
-              Icons.business_outlined,
-              color: AppTheme.primaryBlue,
-              size: 22,
-            ),
-          ),
-          const SizedBox(width: 14),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: AppTheme.primaryDark,
-                  ),
-                ),
-                const SizedBox(height: 3),
-                Text(
-                  company,
-                  style: const TextStyle(
-                    fontSize: 13,
-                    color: AppTheme.textSecondary,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-            decoration: BoxDecoration(
-              color: statusBg,
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Text(
-              statusText,
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.bold,
-                color: statusTextColor,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildBottomNavigationBar(BuildContext context, {required int selectedIndex}) {
-    return Container(
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        border: Border(
-          top: BorderSide(color: AppTheme.cardBorder, width: 1),
-        ),
-      ),
-      padding: const EdgeInsets.symmetric(vertical: 8),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          _buildNavItem(Icons.home_outlined, Icons.home, 'Головна', selectedIndex == 0, () {
-            if (onNavigate != null) onNavigate!('home');
-          }),
-          _buildNavItem(Icons.work_outline, Icons.work, 'Вакансії', selectedIndex == 1, () {}),
-          _buildNavItem(Icons.apartment_outlined, Icons.apartment, 'Компанії', selectedIndex == 2, () {}),
-          _buildNavItem(Icons.calendar_today_outlined, Icons.calendar_today, 'Зустрічі', selectedIndex == 3, () {}),
-          _buildNavItem(Icons.person_outline, Icons.person, 'Профіль', selectedIndex == 4, () {
-            if (onNavigate != null) onNavigate!('profile');
-          }),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildNavItem(IconData icon, IconData activeIcon, String label, bool isSelected, VoidCallback onTap) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(16),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
-              decoration: isSelected
-                  ? BoxDecoration(
-                      color: const Color(0xFFE0F2FE),
-                      borderRadius: BorderRadius.circular(16),
-                    )
-                  : null,
-              child: Icon(
-                isSelected ? activeIcon : icon,
-                color: isSelected ? AppTheme.primaryBlue : AppTheme.textSecondary,
-                size: 22,
-              ),
-            ),
-            const SizedBox(height: 2),
-            Text(
-              label,
-              style: TextStyle(
-                fontSize: 11,
-                fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
-                color: isSelected ? AppTheme.primaryBlue : AppTheme.textSecondary,
-              ),
-            ),
-          ],
-        ),
+      bottomNavigationBar: AppBottomNavBar(
+        selectedIndex: 0,
+        onNavigate: onNavigate,
       ),
     );
   }
